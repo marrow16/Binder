@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Binder Live Demo Page</title>
+		<script src="../../src/binder.js"></script>
+		<link rel="stylesheet" href="../demo.css">
+	</head>
+	<body>
+	<div class="list-holder" role="list">
+		<div id="contacts-list" class="list-scroller">
+			<a id="list-item-template" class="list-item" role="listitem">
+				<div class="gender"></div>
+				<div class="detail-holder">
+					<div class="main-detail"></div>
+					<div class="sub-detail"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div id="inplace-contact-details">
+		<h2 class="inplace-salutation"></h2>
+		<dl>
+			<dt>Email:</dt>
+			<dd class="inplace-email display"></dd>
+			<dd class="inplace-email-edit edit">
+				<input type="text" id="input-email">
+			</dd>
+			<dt>Title:</dt>
+			<dd class="inplace-title display"></dd>
+			<dd class="inplace-title-edit edit">
+				<input type="text" id="input-title">
+			</dd>
+			<dt>Given name:</dt>
+			<dd class="inplace-given-name display"></dd>
+			<dd class="inplace-given-name-edit edit">
+				<input type="text" id="input-given-name">
+			</dd>
+			<dt>Family name:</dt>
+			<dd class="inplace-family-name display"></dd>
+			<dd class="inplace-family-name-edit edit">
+				<input type="text" id="input-family-name">
+			</dd>
+			<dt>Gender:</dt>
+			<dd class="inplace-gender display"></dd>
+			<dd class="inplace-gender-edit edit">
+				<select id="input-gender">
+					<option value="male">Male</option>
+					<option value="female">Female</option>
+					<option value="?">Unspecified</option>
+				</select>
+			</dd>
+		</dl>
+		<div class="contact-details-controls">
+			<button id="button-edit-details">Edit</button>
+			<button id="button-save">Save</button>
+			<button id="button-cancel-edit">Cancel</button>
+			<button id="button-new">New</button>
+			<button id="button-delete">Delete</button>
+		</div>
+	</div>
+	<script src="live.js"></script>
+	</body>
+</html>

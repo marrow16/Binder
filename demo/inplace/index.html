@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Inplace Demo - Five Famous Theoretical Physicists</title>
+		<script src="../../src/binder.js"></script>
+		<style type="text/css">
+			#inplace-node  div {
+				float: left;
+				margin-right: 16px;
+			}
+			#inplace-node  div.button-holder {
+				clear: left;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Five Famous Theoretical Physicists</h1>
+		<div id="inplace-node">
+			<div>
+				<img>
+			</div>
+			<div>
+				<dl>
+					<dt>No:</dt>
+					<dd class="dd-no"></dd>
+					<dt>Name:</dt>
+					<dd class="dd-name"></dd>
+					<dt>Born:</dt>
+					<dd class="dd-dob"></dd>
+				</dl>
+			</div>
+			<div class="button-holder">
+				<button id="btn-next">Next</button>
+			</div>
+		</div>
+		<script>
+			var fiveFamousTheoreticalPhysicists = [
+				{
+					number: 1,
+					name: 'Albert Einstein',
+					dob: '1879-03-14',
+					image: {
+						url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Einstein_1921_by_F_Schmutzer_-_restoration.jpg/220px-Einstein_1921_by_F_Schmutzer_-_restoration.jpg',
+						width: 220,
+						height: 289
+					}
+				},
+				{
+					number: 2,
+					name: 'Stephen Hawking',
+					dob: '1942-01-08',
+					image: {
+						url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Stephen_Hawking.StarChild.jpg/220px-Stephen_Hawking.StarChild.jpg',
+						width: 220,
+						height: 316
+					}
+				},
+				{
+					number: 3,
+					name: 'Richard Feynman',
+					dob: '1918-05-11',
+					image: {
+						url: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/42/Richard_Feynman_Nobel.jpg/220px-Richard_Feynman_Nobel.jpg',
+						width: 220,
+						height: 311
+					}
+				},
+				{
+					number: 4,
+					name: 'Erwin Schrödinger',
+					dob: '1887-08-12',
+					image: {
+						url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Erwin_Schr%C3%B6dinger_%281933%29.jpg/220px-Erwin_Schr%C3%B6dinger_%281933%29.jpg',
+						width: 220,
+						height: 311
+					}
+				},
+				{
+					number: 5,
+					name: 'Max Planck',
+					dob: '1858-04-23',
+					image: {
+						url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Max_Planck_1933.jpg/220px-Max_Planck_1933.jpg',
+						width: 220,
+						height: 273
+					}
+				}
+			];
+			var inplaceBinder = new Binder(document.getElementById('inplace-node'), {
+				'img': {
+					'@src': 'image.url',
+					'@width': 'image.width',
+					'@height': 'image.height'
+				},
+				'dd.dd-no': '#{{number}}',
+				'dd.dd-name': 'name',
+				'dd.dd-dob': function(data) {
+					return new Date(data.dob).toLocaleDateString();
+				},
+				'#btn-next': {
+					'#textContent': function(data) {
+						return data.number < 5 ? 'Next' : 'Back to top';
+					},
+					'@event.click': function(evt, boundNode, eventNode, data) {
+						var nextNo = (data.number === 5 ? 1 : data.number + 1);
+						// we can even rebind within the binding instructions...
+						inplaceBinder.rebind(fiveFamousTheoreticalPhysicists[nextNo - 1]);
+					}
+				}
+			}, null, true /* use binder as inplace mode */);
+			// just bind the first data and the inplace binder takes over...
+			inplaceBinder.bind(fiveFamousTheoreticalPhysicists[0]);
+		</script>
+	</body>
+</html>

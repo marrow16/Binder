@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Binder Basic Demo Page</title>
+		<script src="../../src/binder.js"></script>
+		<link rel="stylesheet" href="../demo.css">
+	</head>
+	<body>
+		<div class="list-holder" role="list">
+			<div id="contacts-list" class="list-scroller">
+				<a id="list-item-template" class="list-item" role="listitem">
+					<div class="gender"></div>
+					<div class="detail-holder">
+						<div class="main-detail"></div>
+						<div class="sub-detail"></div>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div id="inplace-contact-details">
+			<h2 class="inplace-salutation"></h2>
+			<dl>
+				<dt>Email:</dt>
+				<dd class="inplace-email display"></dd>
+				<dt>Title:</dt>
+				<dd class="inplace-title display"></dd>
+				<dt>Given name:</dt>
+				<dd class="inplace-given-name display"></dd>
+				<dt>Family name:</dt>
+				<dd class="inplace-family-name display"></dd>
+				<dt>Gender:</dt>
+				<dd class="inplace-gender display"></dd>
+			</dl>
+		</div>
+		<script src="basic.js"></script>
+	</body>
+</html>

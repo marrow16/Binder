@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Binder - Mocha Test Suite</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.4.1/mocha.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.4.1/mocha.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+		<script src="../src/binder.js"></script>
+		<link rel="stylesheet" href="test.css"/>
+	</head>
+	<body>
+		<script>
+			var assert = chai.assert;
+			mocha.setup({ ui: 'tdd' });
+			(function() {
+				var pageError = null;
+				window.addEventListener('error', function(event) {
+					pageError = event.filename + ':' + event.lineno + ' ' + event.message;
+				});
+				window.addEventListener('load', function() {
+					if (pageError) {
+						suite('page-script-errors', function() {
+							test('no script errors on page', function() {
+								assert.fail(null, null, pageError);
+							});
+						});
+					}
+					mocha.run();
+				});
+			})();
+		</script>
+		<div id="mocha"></div>
+		<div id="test-display-area">
+			<div id="inplace-test-node">
+				<h2>In-Place Binder Test Node</h2>
+				<h3>[THIS TEXT IS REPLACED]</h3>
+				<h4>[THIS TEXT IS REPLACED]</h4>
+			</div>
+			<div id="cookie-cutter-test-node" class="cookie-cut remove-this-class remove-this-class-2">
+				<h2>Cookie-cutter Binder Test Node</h2>
+				<h3>[THIS TEXT IS REPLACED]</h3>
+				<h4>[THIS TEXT IS REPLACED]</h4>
+			</div>
+			<div id="cookie-cutter-complex-test-node" class="cookie-cut remove-this-class remove-this-class-2">
+				<h2>Cookie-cutter Binder Complex Test Node</h2>
+				<h3>[THIS TEXT IS REPLACED]</h3>
+				<h4 class="test">[THIS TEXT IS REPLACED]</h4>
+				<h4 class="sub1">
+					<em class="sub2"></em>
+					<br>
+					<span>Test disabled input:&#xa0;</span><input type="text" placeholder="This should be disabled" disabled>
+				</h4>
+			</div>
+			<div class="cookie-cut-display-area">
+				<h1>Cookie-cut Display Area:-</h1>
+				<div id="cookie-cut-append-area">
+					<!-- THIS IS WHERE COOKIE CUT NODES GET APPENDED -->
+				</div>
+			</div>
+			<template id="cookie-cutter-test-template">
+				<div class="cookie-cut">
+					<h2>Cookie-cutter Binder &lt;template&gt; Test Node (if you see this the browser doesn't support &lt;template&gt;)</h2>
+					<h3>[THIS TEXT IS REPLACED]</h3>
+					<h4>[THIS TEXT IS REPLACED]</h4>
+				</div>
+			</template>
+		</div>
+		<script src="suite.js"></script>
+	</body>
+</html>

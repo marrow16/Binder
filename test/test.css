@@ -1,0 +1,53 @@
+#test-display-area {
+	margin: 60px 50px;
+	font: 20px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#test-display-area h1, #test-display-area h2, #test-display-area h3,
+#test-display-area h4, #test-display-area h5, #test-display-area h6 {
+	margin: 0;
+	font-weight: 200;
+	font-size: 1.4em;
+}
+#test-display-area h2 {
+	font-size: 1.2em;
+}
+#test-display-area h3 {
+	font-size: 1em;
+}
+#test-display-area h4 {
+	font-size: 0.6em;
+}
+
+.cookie-cut-display-area {
+	margin-top: 40px;
+	padding: 16px;
+	border: 1px solid #bbb;
+	background-color: #eee;
+	box-shadow: 3px 3px 10px 0 #eee;
+}
+
+#cookie-cut-append-area {
+	border: 1px solid #bbb;
+	background-color: #fff;
+	padding: 16px;
+}
+
+#inplace-test-node {
+	border: 1px solid blue;
+	padding: 16px;
+	background-color: lightblue;
+	box-shadow: 3px 3px 10px 0 lightblue;
+}
+
+#cookie-cutter-test-node, #cookie-cutter-complex-test-node {
+	display: none;
+}
+
+.cookie-cut {
+	margin-top: 16px;
+	border: 1px solid green;
+	padding: 16px;
+	background-color: lightgreen;
+	box-shadow: 3px 3px 10px 0 lightgreen;
+}
