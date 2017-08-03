@@ -478,7 +478,7 @@ var myBinder = new Binder('<a></a>', {
     },
     '@href': '/items/{{uid}}',
     '#textContent': 'name'
-});
+}, myScope);
 var newNode = myBinder.bind({
     'uid': '27e7a5284dee',
     'name': 'My first item'
