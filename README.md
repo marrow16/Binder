@@ -2,7 +2,7 @@
 
 A pure Javascript template data binder - with high performance and easy to use CSS selector style syntax.
 
-Creating a new binder (using HTML string):-
+Creating a new binder (using HTML string):
 ```javascript
 var myBinder = new Binder('<a></a>', {
     '@id': 'item-link-{{uid}}',
@@ -12,14 +12,14 @@ var myBinder = new Binder('<a></a>', {
 ```
 As above, when constructing a binder, the first argument is the HTML template (either as a string or an exsiting node from the DOM).  The second argument is the actual bindings - an object where the property names are a CSS selector to indentify the node/attribute to be populated and the property values are the binding instruction of what to bind... how to construct the value to be be inserted into the generated HTML. 
 
-and then to use the binder to generate a new node:-
+and then to use the binder to generate a new node:
 ```javascript
 var newNode = myBinder.bind({
     'uid': '27e7a5284dee',
     'name': 'My first item'
 });
 ```
-would produce a node with the following HTML:-
+would produce a node with the following HTML:
 ```html
 <a id="item-link-27e7a5284dee" href="/items/27e7a5284dee">My first item</a>
 ```
@@ -124,7 +124,7 @@ would produce a node with the following HTML:-
         </td>
         <td>
             [optional] An object containing additional binder (debugging) options.<br/>
-            The object can conatin the following boolean properties:-<br/>
+            The object can conatin the following boolean properties:<br/>
             <ul>
                 <li><code>compileWarnings</code> - whether to compiler (constructor) shows in the console warnings about compile prroblems (default is <code>false</code>)</li>
                 <li><code>bindWarnings</code> - whether, during binding, warnings are shown in the console about addressed data properties not being present (default is <code>false</code>)</li>
@@ -143,11 +143,11 @@ would produce a node with the following HTML:-
         </th>
         <td>
             <br/><em>Populates a template node with data</em><br/><br/> 
-            <strong>Syntax:-</strong><br/><br/>
+            <strong>Syntax:</strong><br/><br/>
             <code><em>binder.</em>bind(<em>data</em>) =&gt; <em>node</em></code><br/><br/>
-            <strong>Parameters:-</strong><br/><br/>
+            <strong>Parameters:</strong><br/><br/>
             <code><em>data</em></code> - an object containing the data to be bound<br/><br/>
-            <strong>Returns:-</strong><br/><br/>
+            <strong>Returns:</strong><br/><br/>
             <code>node</code> - the node with data populated
         </td>
     </tr>
@@ -158,12 +158,12 @@ would produce a node with the following HTML:-
         </th>
         <td>
             <br/><em>Re-populates an existing node with new data</em><br/> <br/>
-            <strong>Syntax:-</strong><br/><br/>
+            <strong>Syntax:</strong><br/><br/>
             <code><em>binder.</em>rebind(<em>data</em>, <em>node</em>) =&gt; <em>node</em></code><br/><br/>
-            <strong>Parameters:-</strong><br/><br/>
+            <strong>Parameters:</strong><br/><br/>
             <code><em>data</em></code> - an object containing the data to be bound<br/><br/>
             <code><em>node</em></code> - the node to be re-bound<br/><br/>
-            <strong>Returns:-</strong><br/><br/>
+            <strong>Returns:</strong><br/><br/>
             <code>node</code> - the node with data populated
         </td>
     </tr>
@@ -174,11 +174,11 @@ would produce a node with the following HTML:-
         </th>
         <td>
             <br/><em>Gets the currently bound data from a node</em><br/><br/> 
-            <strong>Syntax:-</strong><br/><br/>
+            <strong>Syntax:</strong><br/><br/>
             <code><em>binder.</em>getBoundData(<em>node</em>) =&gt; <em>object</em></code><br/><br/>
-            <strong>Parameters:-</strong><br/><br/>
+            <strong>Parameters:</strong><br/><br/>
             <code><em>node</em></code> - the previously bound node<br/><br/>
-            <strong>Returns:-</strong><br/><br/>
+            <strong>Returns:</strong><br/><br/>
             <code>object</code> - the data that was bound to the node
         </td>
     </tr>
@@ -190,9 +190,9 @@ would produce a node with the following HTML:-
         <td>
             <br/><em>Returns whether the binder was created as </em><a href="#cookie-cutter-mode--in-place-mode">cookie-cutter mode</a>
             <em> or </em> <a href="#cookie-cutter-mode--in-place-mode">in-place mode</a>.<br/><br/>
-            <strong>Syntax:-</strong><br/><br/>
+            <strong>Syntax:</strong><br/><br/>
             <code><em>binder.</em>isInplace() =&gt; <em>boolean</em></code><br/><br/>
-            <strong>Returns:-</strong><br/><br/>
+            <strong>Returns:</strong><br/><br/>
             <code>boolean</code> - whether the binder was created as <a href="#cookie-cutter-mode--in-place-mode">in-place mode</a> (<code>true</code>) or 
             <a href="#cookie-cutter-mode--in-place-mode">cookie-cutter mode</a> (<code>false</code>)
         </td>
@@ -205,7 +205,7 @@ would produce a node with the following HTML:-
 
 The binding selectors are the property names of the object passed to the binding constructor.  These property names use 'standard' CSS query syntax - as used by `.querySelectror()` or `.querySelectorAll()`.  Each specified binding selector (CSS query) **must** only select one node from the template - if more than one node within the template for the binding selector is found, the Binder constructor will throw an exception. 
  
-To allow for bindings to attributes, properties and events some additional 'special' tokens can be added to the end of the binding selectors - these are:-  
+To allow for bindings to attributes, properties and events some additional 'special' tokens can be added to the end of the binding selectors - these are:  
 
 <table>
     <tr>
@@ -333,7 +333,7 @@ To allow for bindings to attributes, properties and events some additional 'spec
 #### Nested Binding Selectors
 If the value (binding instruction) of a binding selector is an ```object```, it is treated as descendant binding selectors - this enables you to structure your bindings without having to repeat selectors.
 
-A simple example of using nested binding selectors is to set multiple attributes on the same selected node, e.g.:-
+A simple example of using nested binding selectors is to set multiple attributes on the same selected node, e.g.:
 ```javascript
 var myBinder = new Binder('<a><img></a>', {
     '@href': 'url', // set @href attribute on <a>
@@ -351,7 +351,7 @@ var newNode = myBinder.bind({
 });
 
 ```
-By default, the nested binding selectors are treated as CSS descendant selectors - but you can use explicit child selectors using the usual CSS ```>``` selector, e.g.:-
+By default, the nested binding selectors are treated as CSS descendant selectors - but you can use explicit child selectors using the usual CSS ```>``` selector, e.g.:
 ```javascript
 var myBinder = new Binder(
     '<div>' + '' +
@@ -375,7 +375,7 @@ Note: Immediate child ```>``` selector can **only** be used at top-level binding
 
 ## Binding Instructions
 
-The binding instructions are the property values of the object passed to the binding constructor.  These values can be different types - documented as:-
+The binding instructions are the property values of the object passed to the binding constructor.  These values can be different types - documented as:
 
 <table>
     <tr>
@@ -388,7 +388,7 @@ The binding instructions are the property values of the object passed to the bin
             <code>string</code>
         </td>
         <td>
-            Choice of:-
+            Choice of:
             <ul>
                 <li>
                     A string containing the name a property from the bound data to use as the value.  The propery name can contain <code>.</code> property path seperators to enable traversing the bound data object.  
@@ -409,15 +409,15 @@ The binding instructions are the property values of the object passed to the bin
             <code>function</code>
         </td>
         <td>
-            <em>For data binding selectors:-</em><br/><br/>
+            <em>For data binding selectors:</em><br/><br/>
             A function with one argument that receives the data being bound, e.g.<br/>
             <code>function(data)</code><br/>
             and returns the string to be injected into the template.<br/>
             <br/>
-            <br/><em>For event binding selectors:-</em><br/><br/>
+            <br/><em>For event binding selectors:</em><br/><br/>
             A function with four arguments that receive information about the event and data being bound, e.g.<br/>
             <code>function(evt, boundNode, eventNode, data)</code><br/>
-            where the arguments are:-
+            where the arguments are:
             <ul>
                 <li><code>evt</code> - the actual event</li>
                 <li><code>boundNode</code> - the outer bound node</li>
@@ -443,7 +443,7 @@ The binding instructions are the property values of the object passed to the bin
 <br/>
 
 ## Binding Instructions Function Scope
-The binding instruction functions (including event listener functions) are, by default, bound to the bindings object passed to the constructor - for example, the following code:-
+The binding instruction functions (including event listener functions) are, by default, bound to the bindings object passed to the constructor - for example, the following code:
 ```javascript
 var myBinder = new Binder('<a></a>', {
     '@id': function(data) {
@@ -458,11 +458,11 @@ var newNode = myBinder.bind({
     'name': 'My first item'
 });
 ```
-will show output in the console of:-
+will show output in the console of:
 ```
 this['@href'] = /items/{{uuid}}
 ```
-Which really isn't of great use - which is why the binder constructor provides a third argument which allows you to supply an object for the function scope, e.g.:-
+Which really isn't of great use - which is why the binder constructor provides a third argument which allows you to supply an object for the function scope, e.g.:
 ```javascript
 var myScope = {
     someTestProperty: "foo",
@@ -484,7 +484,7 @@ var newNode = myBinder.bind({
     'name': 'My first item'
 });
 ```
-will show output in the console of:-
+will show output in the console of:
 ```
 this.someTestProperty = foo
 Test says...  Hello World!
@@ -496,7 +496,7 @@ That's a whole lot more useful!  You can now use the binding function scope to a
 ## Cookie-cutter mode & In-place mode
 By default, Binder runs in 'cookie-cutter' mode - i.e. everytime you call ```bind(data)``` on your binder it returns a newly created node from your template and binding instructions.  However, Binder also provides an 'in-place' mode - which allows data to be bound and re-bound to an existing static node in the DOM.
 
-To create a binder for 'in-place' mode simply use the fourth argument of the constructor, e.g.:-
+To create a binder for 'in-place' mode simply use the fourth argument of the constructor, e.g.:
 ```javascript
 var myBinder = new Binder(document.getElementById('my-inplace-node'),
     {
