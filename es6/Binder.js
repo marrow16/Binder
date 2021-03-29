@@ -1,115 +1,91 @@
+export const BindingDefaults = {
+    bindWarnings: false,
+    compileWarnings: false
+};
+
+export const INPLACE = true;
+export const CUTTER = false;
+
 export class Binder {
-    static INPLACE = true;
-    static CUTTER = false;
-    static DEFAULT_OPTIONS = {bindWarnings: true, compileWarnings: true};
-
-    #inplace;
-    #functionScope;
-    #bindWarnings = false;
-    #compileWarnings = false;
-
-    #resetNode;
-    #templateNode;
-
-    #bindings;
-
     constructor(/*DOMElement | string*/template, /*object*/bindings,
                 /*[object]*/ bindingsScope, /*[boolean]*/ inplace,
                 /*[object]*/ options) {
-        this.#inplace = (typeof inplace === 'boolean') && inplace;
-        this.#functionScope = (bindingsScope !== null && typeof bindingsScope === 'object' ? bindingsScope : (bindingsScope === 'this' ? this : bindings));
+        this.inplace = (typeof inplace === 'boolean') && inplace;
+        this.functionScope = (bindingsScope !== null && typeof bindingsScope === 'object' ? bindingsScope : (bindingsScope === 'this' ? this : bindings));
         if (options != null && typeof options === 'object') {
-            this.#bindWarnings = typeof options.bindWarnings === 'boolean' ? options.bindWarnings : false;
-            this.#compileWarnings = typeof options.compileWarnings === 'boolean' ? options.compileWarnings : false;
+            this.bindWarnings = typeof options.bindWarnings === 'boolean' ? options.bindWarnings : false;
+            this.compileWarnings = typeof options.compileWarnings === 'boolean' ? options.compileWarnings : false;
         } else {
-            this.#bindWarnings = Binder.DEFAULT_OPTIONS.bindWarnings;
-            this.#compileWarnings = Binder.DEFAULT_OPTIONS.compileWarnings;
+            this.bindWarnings = BindingDefaults.bindWarnings;
+            this.compileWarnings = BindingDefaults.compileWarnings;
         }
 
-        if (this.#inplace) {
+        if (this.inplace) {
             // it's an inplace binder - so the node argument must be an DOM HTML Element...
             if (!isElement(template)) {
                 throw new TypeError("Binder constructor: In-place binder argument 'template' must be an existing DOM HTMLElement!");
             }
-            this.#templateNode = template;
-            this.#resetNode = template.cloneNode(true);
+            this.templateNode = template;
+            this.resetNode = template.cloneNode(true);
         } else {
             // it's a cookie-cutter binder...
             if (typeof template === 'string') {
                 // template defined as a string - create a node out of it...
                 var fragment = document.createElement('div');
                 fragment.innerHTML = template;
-                this.#resetNode = fragment.firstElementChild;
+                this.resetNode = fragment.firstElementChild;
             } else if (isElement(template)) {
                 if ('content' in template) {
                     // it's a HTML <template>...
-                    this.#resetNode = document.importNode(template.content, true).firstElementChild;
+                    this.resetNode = document.importNode(template.content, true).firstElementChild;
                 } else {
-                    this.#resetNode = template;
+                    this.resetNode = template;
                 }
             } else {
                 throw new TypeError("Binder constructor: Argument 'template' must be a string or DOM HTMLElement!");
             }
             // the actual template used (that will have nodes populated by selectors) is a clone of the supplied template...
-            this.#templateNode = this.#resetNode.cloneNode(true);
+            this.templateNode = this.resetNode.cloneNode(true);
         }
 
-        this.#bindings = new Bindings(bindings, this.#inplace, this.#functionScope,
-                                      this.#resetNode, this.#templateNode,
-                                      this.#bindWarnings, this.#compileWarnings);
+        this.bindings = new Bindings(bindings, this.inplace, this.functionScope,
+            this.resetNode, this.templateNode,
+            this.bindWarnings, this.compileWarnings);
 
     }
 
     get inPlace() {
-        return this.#inplace;
+        return this.inplace;
     }
 
     getBoundData(/*[node*]*/node) {
-        if (this.#inplace) {
-            return this.#templateNode.$boundData;
+        if (this.inplace) {
+            return this.templateNode.$boundData;
         } else {
             return node.$boundData;
         }
     }
 
     bind(data) {
-        if (this.#inplace) {
-            this.#bindings.inplaceBind(data);
-            return this.#templateNode;
+        if (this.inplace) {
+            this.bindings.inplaceBind(data);
+            return this.templateNode;
         } else {
-            return this.#bindings.bind(data);
+            return this.bindings.bind(data);
         }
     }
 
     rebind(data, node) {
-        if (this.#inplace) {
+        if (this.inplace) {
             return this.bind(data);
         } else {
-            return this.#bindings.rebind(data, node);
+            return this.bindings.rebind(data, node);
         }
     }
 
 }
 
 class Bindings {
-    inplace;
-    functionScope;
-
-    resetNode;
-    templateNode;
-
-    bindWarnings;
-    compileWarnings;
-
-    bindingFunctions = []; // actual binding functions
-    postClonePropertyBindings = []; // binding functions that must be run after cloning
-    rebindingFunctions = [];
-    rebindingResetFunctions = [];
-    eventBindings = []; // list of event bindings
-    resetFunctions = [];
-    uniqueResetsMap = {}; // map of selectors to avoid creating duplicate resets
-    afterBindEvent; // any @event.bound event specified
-
     constructor(bindings, inplace, functionScope,
                 resetNode, templateNode,
                 bindWarnings, compileWarnings) {
@@ -119,6 +95,15 @@ class Bindings {
         this.compileWarnings = compileWarnings;
         this.resetNode = resetNode;
         this.templateNode = templateNode;
+
+        this.bindingFunctions = []; // actual binding functions
+        this.postClonePropertyBindings = []; // binding functions that must be run after cloning
+        this.rebindingFunctions = [];
+        this.rebindingResetFunctions = [];
+        this.eventBindings = []; // list of event bindings
+        this.resetFunctions = [];
+        this.uniqueResetsMap = {}; // map of selectors to avoid creating duplicate resets
+        this.afterBindEvent; // any @event.bound event specified
 
         for (var pty in bindings) {
             if (bindings.hasOwnProperty(pty)) {
@@ -540,8 +525,8 @@ class Bindings {
     }
 
     /**
-    * Utility method to build a catch for a data getter - so that if bindWarnings are turned on, any errors are console logged
-    */
+     * Utility method to build a catch for a data getter - so that if bindWarnings are turned on, any errors are console logged
+     */
     buildCatch(/*string*/expr, /*string*/objName) {
         var catchBit = ['catch(e){'];
         if (this.bindWarnings) {
